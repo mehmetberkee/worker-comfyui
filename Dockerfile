@@ -93,3 +93,14 @@ COPY --from=downloader /comfyui/models /comfyui/models
 
 # Start container
 CMD ["/start.sh"]
+
+COPY custom_nodes /comfyui/custom_nodes
+
+#   (2) install per-node Python deps if any
+RUN for d in /comfyui/custom_nodes/*/ ; do \
+      [ -f "$d/requirements.txt" ] && pip install --no-cache-dir -r "$d/requirements.txt" ; \
+    done
+
+#   (3) models keep coming from the volume that the base image
+#       already links to /comfyui/models – nothing to change
+# --- your addition ends
