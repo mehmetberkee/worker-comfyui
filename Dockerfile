@@ -13,11 +13,12 @@ ENV CMAKE_BUILD_PARALLEL_LEVEL=8
 # Install Python, git and other necessary tools
 RUN apt-get update && apt-get install -y \
     python3.10 python3-pip git wget \
-    libgl1                 \  # zaten vardı
-    libglib2.0-0           \  # ← libgthread buradan gelir
-    libsm6 libxext6 libxrender1  # opencv ‘highgui’ için
-    && ln -sf /usr/bin/python3.10 /usr/bin/python \
-    && ln -sf /usr/bin/pip3 /usr/bin/pip
+    libgl1 \                    # OpenCV için
+    libglib2.0-0 \              # libgthread burada
+    libsm6 libxext6 libxrender1 \
+ && ln -sf /usr/bin/python3.10 /usr/bin/python \
+ && ln -sf /usr/bin/pip3 /usr/bin/pip
+
 
 # Clean up to reduce image size
 RUN apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
