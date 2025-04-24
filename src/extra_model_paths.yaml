@@ -1,12 +1,15 @@
 runpod_worker_comfy:
-  base_path: /runpod-volume
-  checkpoints: models/checkpoints/
-  clip: models/clip/
-  clip_vision: models/clip_vision/
-  configs: models/configs/
-  controlnet: models/controlnet/
-  embeddings: models/embeddings/
-  loras: models/loras/
-  upscale_models: models/upscale_models/
-  vae: models/vae/
-  unet: models/unet/
+  base_path: /runpod-volume          #  ↖  volume’ı bu dizine mount ediyorsanız
+  checkpoints: ComfyUI/models/checkpoints/
+  clip:        ComfyUI/models/clip/
+  clip_vision: ComfyUI/models/clip_vision/
+  configs:     ComfyUI/models/configs/
+  controlnet:  ComfyUI/models/controlnet/
+  embeddings:  ComfyUI/models/embeddings/
+  loras:       ComfyUI/models/loras/
+  upscale_models: ComfyUI/models/upscale_models/
+  vae:         ComfyUI/models/vae/
+  unet:        ComfyUI/models/unet/
+  custom_nodes: ComfyUI/custom_nodes/
+  pulid: ComfyUI/models/pulid/
+  insightface: ComfyUI/models/insightface/
