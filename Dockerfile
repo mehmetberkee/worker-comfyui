@@ -13,8 +13,8 @@ ENV CMAKE_BUILD_PARALLEL_LEVEL=8
 # Install Python, git and other necessary tools
 RUN apt-get update && apt-get install -y \
     python3.10 python3-pip git wget \
-    libgl1 \                    # OpenCV için
-    libglib2.0-0 \              # libgthread burada
+    libgl1 \
+    libglib2.0-0 \
     libsm6 libxext6 libxrender1 \
  && ln -sf /usr/bin/python3.10 /usr/bin/python \
  && ln -sf /usr/bin/pip3 /usr/bin/pip
@@ -55,7 +55,7 @@ RUN set -eux; \
     done
 
 RUN pip install --no-cache-dir \
-    packaging filetype pillow  # KJNodes’un sık istediği ufak paketler
+    packaging filetype pillow
 # — 3) requirements.txt bulunan klasörleri bulup kur
 RUN find /comfyui/custom_nodes -name requirements.txt -print0 \
     | xargs -0 -I{} pip install --no-cache-dir -r {}
