@@ -32,6 +32,35 @@ RUN /usr/bin/yes | comfy --workspace /comfyui install --cuda-version 11.8 --nvid
 # Change working directory to ComfyUI
 WORKDIR /comfyui
 
+###############################################################################
+# ⬇︎  BU BLOĞU “WORKDIR /comfyui” SATIRINDAN SONRA EKLEYİN  ⬇︎
+###############################################################################
+
+# — 1) Klonlanacak node repo’larının listesi
+ARG CUSTOM_NODE_REPOS="\
+cg-use-everywhere=https://github.com/chrisgoringe/cg-use-everywhere.git \
+comfy-image-saver=https://github.com/farizrifqi/ComfyUI-Image-Saver.git \
+comfyui-kjnodes=https://github.com/kijai/ComfyUI-KJNodes.git \
+pulid-comfyui=https://github.com/cubiq/PuLID_ComfyUI.git \
+rgthree-comfy=https://github.com/rgthree/rgthree-comfy.git \
+"
+
+# — 2) Hepsini /comfyui/custom_nodes altına klonla
+RUN set -eux; \
+    mkdir -p /comfyui/custom_nodes; \
+    for entry in $CUSTOM_NODE_REPOS; do \
+        name="${entry%%=*}"; repo="${entry#*=}"; \
+        echo ">>> Cloning $repo -> $name"; \
+        git clone --depth 1 "$repo" "/comfyui/custom_nodes/$name"; \
+    done
+
+# — 3) requirements.txt bulunan klasörleri bulup kur
+RUN find /comfyui/custom_nodes -name requirements.txt -print0 \
+    | xargs -0 -I{} pip install --no-cache-dir -r {}
+
+###############################################################################
+# ⬆︎  EK BLOK BİTTİ  ⬆︎
+###############################################################################
 # Install runpod
 RUN pip install runpod requests
 
@@ -93,14 +122,3 @@ COPY --from=downloader /comfyui/models /comfyui/models
 
 # Start container
 CMD ["/start.sh"]
-
-COPY custom_nodes /comfyui/custom_nodes
-
-#   (2) install per-node Python deps if any
-RUN for d in /comfyui/custom_nodes/*/ ; do \
-      [ -f "$d/requirements.txt" ] && pip install --no-cache-dir -r "$d/requirements.txt" ; \
-    done
-
-#   (3) models keep coming from the volume that the base image
-#       already links to /comfyui/models – nothing to change
-# --- your addition ends
