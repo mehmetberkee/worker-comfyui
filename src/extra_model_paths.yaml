@@ -10,6 +10,5 @@ runpod_worker_comfy:
   upscale_models: ComfyUI/models/upscale_models/
   vae:         ComfyUI/models/vae/
   unet:        ComfyUI/models/unet/
-  custom_nodes: ComfyUI/custom_nodes/
   pulid: ComfyUI/models/pulid/
   insightface: ComfyUI/models/insightface/
