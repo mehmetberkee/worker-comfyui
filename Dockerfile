@@ -27,7 +27,7 @@ RUN apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 RUN pip install comfy-cli
 
 # Install ComfyUI
-RUN /usr/bin/yes | comfy --workspace /comfyui install --cuda-version 11.8 --nvidia --version 0.3.26
+RUN /usr/bin/yes | comfy --workspace /comfyui install --cuda-version 11.8 --nvidia --version 0.3.18
 
 # Change working directory to ComfyUI
 WORKDIR /comfyui
@@ -68,7 +68,7 @@ RUN find /comfyui/custom_nodes -name requirements.txt -print0 \
 # ---------------- PuLID için Gerekli Bağımlılıkları Kur ------------------
 
 # facexlib için gerekli olabilecek sistem kütüphanesi
-RUN apt-get update && apt-get install -y --no-install-recommends unzip libstdc++6 && \
+RUN apt-get update && apt-get install -y --no-install-recommends libstdc++6 && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # 1. facexlib'i kur
@@ -79,21 +79,7 @@ RUN pip install --no-cache-dir --use-pep517 facexlib
 RUN pip install --no-cache-dir insightface==0.7.3 onnxruntime-gpu
 
 # --------------------------------------------------------------------------
-ENV INSIGHTFACE_MODELS_DIR=/comfyui/models/insightface/models
-RUN set -eux; \
-    mkdir -p ${INSIGHTFACE_MODELS_DIR}; \
-    wget -nv -O /tmp/antelopev2.zip \
-        https://github.com/deepinsight/insightface/releases/download/v0.7/antelopev2.zip; \
-    unzip -q /tmp/antelopev2.zip -d ${INSIGHTFACE_MODELS_DIR}; \
-    # antelopev2.zip bazen iç içe klasörle gelir, gerekirse düzleştir
-    if [ -d ${INSIGHTFACE_MODELS_DIR}/antelopev2/antelopev2 ]; then \
-        mv ${INSIGHTFACE_MODELS_DIR}/antelopev2/antelopev2/* \
-            ${INSIGHTFACE_MODELS_DIR}/antelopev2/ && \
-        rmdir ${INSIGHTFACE_MODELS_DIR}/antelopev2/antelopev2; \
-    fi && \
-    rm -f /tmp/antelopev2.zip
-# InsightFace’ın doğru klasörü bulması için (isteğe bağlı)
-ENV INSIGHTFACE_DIR=${INSIGHTFACE_MODELS_DIR}
+
 # Install runpod
 RUN pip install runpod requests
 
