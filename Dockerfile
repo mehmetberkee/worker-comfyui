@@ -63,6 +63,25 @@ RUN find /comfyui/custom_nodes -name requirements.txt -print0 \
 ###############################################################################
 # ⬆︎  EK BLOK BİTTİ  ⬆︎
 ###############################################################################
+
+# ---------------- PuLID için Gerekli Bağımlılıkları Kur ------------------
+
+# facexlib için gerekli olabilecek sistem kütüphanesi
+RUN apt-get update && apt-get install -y --no-install-recommends libstdc++6 && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# 1. facexlib'i kur
+RUN pip install --no-cache-dir --use-pep517 facexlib
+
+# 2. Belirtilen insightface sürümünü (.whl) ve onnxruntime-gpu'yu kur
+#    Not: Python 3.10 (cp310) ve Linux için uygun .whl dosyasını indiriyoruz.
+#    Not: CUDA ortamında olduğumuz için onnxruntime-gpu kullanıyoruz.
+RUN wget -O /tmp/insightface-0.7.3-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl \
+        https://github.com/Gourieff/Assets/raw/main/Insightface/insightface-0.7.3-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl && \
+    pip install --no-cache-dir /tmp/insightface-0.7.3-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl onnxruntime-gpu && \
+    rm /tmp/insightface-0.7.3-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+
+# --------------------------------------------------------------------------
 # Install runpod
 RUN pip install runpod requests
 
