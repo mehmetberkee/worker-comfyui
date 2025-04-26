@@ -11,4 +11,4 @@ runpod_worker_comfy:
   vae:         ComfyUI/models/vae/
   unet:        ComfyUI/models/unet/
   pulid: ComfyUI/models/pulid/
-  insightface: ComfyUI/models/insightface/antelopev2/
+  insightface: ComfyUI/models/insightface/models/
