@@ -45,8 +45,7 @@ pulid-comfyui=https://github.com/cubiq/PuLID_ComfyUI.git \
 rgthree-comfy=https://github.com/rgthree/rgthree-comfy.git \
 comfyui-pulid-flux-ll=https://github.com/lldacing/ComfyUI_PuLID_Flux_ll.git \
 comfyui_controlnet_aux=https://github.com/Fannovel16/comfyui_controlnet_aux.git \
-comfyui_essentials=https://github.com/cubiq/ComfyUI_essentials.git
-"
+comfyui_essentials=https://github.com/cubiq/ComfyUI_essentials.git"
 
 # — 2) Hepsini /comfyui/custom_nodes altına klonla
 RUN set -eux; \
