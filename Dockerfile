@@ -43,9 +43,7 @@ comfy-image-saver=https://github.com/farizrifqi/ComfyUI-Image-Saver.git \
 comfyui-kjnodes=https://github.com/kijai/ComfyUI-KJNodes.git \
 pulid-comfyui=https://github.com/cubiq/PuLID_ComfyUI.git \
 rgthree-comfy=https://github.com/rgthree/rgthree-comfy.git \
-comfyui-pulid-flux-ll=https://github.com/lldacing/ComfyUI_PuLID_Flux_ll.git \
-comfyui_controlnet_aux=https://github.com/Fannovel16/comfyui_controlnet_aux.git \
-comfyui_essentials=https://github.com/cubiq/ComfyUI_essentials.git"
+"
 
 # — 2) Hepsini /comfyui/custom_nodes altına klonla
 RUN set -eux; \
@@ -59,14 +57,8 @@ RUN set -eux; \
 RUN pip install --no-cache-dir \
     packaging filetype pillow
 # — 3) requirements.txt bulunan klasörleri bulup kur
-RUN find /comfyui/custom_nodes -name requirements.txt | while read -r req_file; do \
-        echo ">>> Installing requirements from $req_file"; \
-        pip install --no-cache-dir -r "$req_file"; \
-        if [ $? -ne 0 ]; then \
-            echo "ERROR: Failed to install requirements from $req_file" >&2; \
-            exit 1; \
-        fi; \
-    done
+RUN find /comfyui/custom_nodes -name requirements.txt -print0 \
+    | xargs -0 -I{} pip install --no-cache-dir -r {}
 
 ###############################################################################
 # ⬆︎  EK BLOK BİTTİ  ⬆︎
