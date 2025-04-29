@@ -35,7 +35,8 @@ WORKDIR /comfyui
 ###############################################################################
 # ⬇︎  BU BLOĞU “WORKDIR /comfyui” SATIRINDAN SONRA EKLEYİN  ⬇︎
 ###############################################################################
-
+RUN apt-get update && apt-get install -y git-lfs && git lfs install
+ENV GIT_LFS_SKIP_SMUDGE=1
 # — 1) Klonlanacak node repo’larının listesi
 ARG CUSTOM_NODE_REPOS="\
 cg-use-everywhere=https://github.com/chrisgoringe/cg-use-everywhere.git \
@@ -45,9 +46,9 @@ pulid-comfyui=https://github.com/cubiq/PuLID_ComfyUI.git \
 rgthree-comfy=https://github.com/rgthree/rgthree-comfy.git \
 comfyui-pulid-flux-ll=https://github.com/lldacing/ComfyUI_PuLID_Flux_ll.git \
 comfyui_essentials=https://github.com/cubiq/ComfyUI_essentials.git \
-comfyui-depth-fm=https://github.com/kijai/ComfyUI-depth-fm.git"
+comfyui_controlnet_aux=https://github.com/Fannovel16/comfyui_controlnet_aux.git"
 
-#comfyui_depthanythingv2=https://github.com/kijai/ComfyUI-DepthAnythingV2.git \
+
 
 # — 2) Hepsini /comfyui/custom_nodes altına klonla
 RUN set -eux; \
@@ -61,8 +62,13 @@ RUN set -eux; \
 RUN pip install --no-cache-dir \
     packaging filetype pillow
 # — 3) requirements.txt bulunan klasörleri bulup kur
-RUN find /comfyui/custom_nodes -name requirements.txt -print0 \
-    | xargs -0 -I{} pip install --no-cache-dir -r {}
+# requirements.txt dosyası olan klasörleri bul, ama controlnet_aux’u atla
+RUN find /comfyui/custom_nodes -name requirements.txt \
+    | grep -v "comfyui_controlnet_aux" \
+    | xargs -I{} pip install --no-cache-dir -r {}
+
+# DepthAnything’in ihtiyaç duyduğu hafif paketler:
+RUN pip install --no-cache-dir opencv-python scikit-image pillow timm einops huggingface_hub
 
 ###############################################################################
 # ⬆︎  EK BLOK BİTTİ  ⬆︎
