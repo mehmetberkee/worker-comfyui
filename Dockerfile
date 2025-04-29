@@ -44,7 +44,8 @@ comfyui-kjnodes=https://github.com/kijai/ComfyUI-KJNodes.git \
 pulid-comfyui=https://github.com/cubiq/PuLID_ComfyUI.git \
 rgthree-comfy=https://github.com/rgthree/rgthree-comfy.git \
 comfyui-pulid-flux-ll=https://github.com/lldacing/ComfyUI_PuLID_Flux_ll.git \
-comfyui_essentials=https://github.com/cubiq/ComfyUI_essentials.git"
+comfyui_essentials=https://github.com/cubiq/ComfyUI_essentials.git \
+comfyui-depth-fm=https://github.com/kijai/ComfyUI-depth-fm.git"
 
 #comfyui_depthanythingv2=https://github.com/kijai/ComfyUI-DepthAnythingV2.git \
 
