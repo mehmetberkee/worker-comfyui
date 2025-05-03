@@ -13,3 +13,4 @@ runpod_worker_comfy:
   pulid: ComfyUI/models/pulid/
   insightface: ComfyUI/models/insightface/
   depthanything: ComfyUI/models/depthanything/
+  text_encoders: ComfyUI/models/text_encoders/
