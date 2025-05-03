@@ -39,8 +39,6 @@ RUN apt-get update && apt-get install -y git-lfs && git lfs install
 ENV GIT_LFS_SKIP_SMUDGE=1
 # — 1) Klonlanacak node repo’larının listesi
 ARG CUSTOM_NODE_REPOS="\
-cg-use-everywhere=https://github.com/chrisgoringe/cg-use-everywhere.git \
-comfy-image-saver=https://github.com/farizrifqi/ComfyUI-Image-Saver.git \
 comfyui-kjnodes=https://github.com/kijai/ComfyUI-KJNodes.git \
 pulid-comfyui=https://github.com/cubiq/PuLID_ComfyUI.git \
 rgthree-comfy=https://github.com/rgthree/rgthree-comfy.git \
@@ -49,6 +47,8 @@ comfyui_essentials=https://github.com/cubiq/ComfyUI_essentials.git \
 comfyui_controlnet_aux=https://github.com/Fannovel16/comfyui_controlnet_aux.git \
 comfyui_layerstyle=https://github.com/chflame163/ComfyUI_LayerStyle.git"
 
+# cg-use-everywhere=https://github.com/chrisgoringe/cg-use-everywhere.git \
+# comfy-image-saver=https://github.com/farizrifqi/ComfyUI-Image-Saver.git \
 
 
 # — 2) Hepsini /comfyui/custom_nodes altına klonla
