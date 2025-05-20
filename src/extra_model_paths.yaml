@@ -14,3 +14,4 @@ runpod_worker_comfy:
   insightface: ComfyUI/models/insightface/
   depthanything: ComfyUI/models/depthanything/
   text_encoders: ComfyUI/models/text_encoders/
+  birefnet:      ComfyUI/models/BiRefNet/pth/
