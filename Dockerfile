@@ -44,8 +44,7 @@ pulid-comfyui=https://github.com/cubiq/PuLID_ComfyUI.git \
 rgthree-comfy=https://github.com/rgthree/rgthree-comfy.git \
 comfyui-pulid-flux-ll=https://github.com/lldacing/ComfyUI_PuLID_Flux_ll.git \
 comfyui_essentials=https://github.com/cubiq/ComfyUI_essentials.git \
-comfyui_layerstyle=https://github.com/chflame163/ComfyUI_LayerStyle.git \
-efficiency-nodes-comfyui=https://github.com/jags111/efficiency-nodes-comfyui.git"
+comfyui_layerstyle=https://github.com/chflame163/ComfyUI_LayerStyle.git"
 
 # cg-use-everywhere=https://github.com/chrisgoringe/cg-use-everywhere.git \
 # comfy-image-saver=https://github.com/farizrifqi/ComfyUI-Image-Saver.git \
