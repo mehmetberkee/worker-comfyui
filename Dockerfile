@@ -32,65 +32,6 @@ RUN /usr/bin/yes | comfy --workspace /comfyui install --cuda-version 11.8 --nvid
 # Change working directory to ComfyUI
 WORKDIR /comfyui
 
-###############################################################################
-# ⬇︎  BU BLOĞU “WORKDIR /comfyui” SATIRINDAN SONRA EKLEYİN  ⬇︎
-###############################################################################
-RUN apt-get update && apt-get install -y git-lfs && git lfs install
-ENV GIT_LFS_SKIP_SMUDGE=1
-# — 1) Klonlanacak node repo’larının listesi
-ARG CUSTOM_NODE_REPOS="\
-comfyui-kjnodes=https://github.com/kijai/ComfyUI-KJNodes.git \
-pulid-comfyui=https://github.com/cubiq/PuLID_ComfyUI.git \
-rgthree-comfy=https://github.com/rgthree/rgthree-comfy.git \
-comfyui-pulid-flux-ll=https://github.com/lldacing/ComfyUI_PuLID_Flux_ll.git \
-comfyui_essentials=https://github.com/cubiq/ComfyUI_essentials.git \
-comfyui_controlnet_aux=https://github.com/Fannovel16/comfyui_controlnet_aux.git \
-comfyui_layerstyle=https://github.com/chflame163/ComfyUI_LayerStyle.git"
-
-# cg-use-everywhere=https://github.com/chrisgoringe/cg-use-everywhere.git \
-# comfy-image-saver=https://github.com/farizrifqi/ComfyUI-Image-Saver.git \
-
-
-# — 2) Hepsini /comfyui/custom_nodes altına klonla
-RUN set -eux; \
-    mkdir -p /comfyui/custom_nodes; \
-    for entry in $CUSTOM_NODE_REPOS; do \
-        name="${entry%%=*}"; repo="${entry#*=}"; \
-        echo ">>> Cloning $repo -> $name"; \
-        git clone --depth 1 "$repo" "/comfyui/custom_nodes/$name"; \
-    done
-
-RUN pip install --no-cache-dir \
-    packaging filetype pillow
-# — 3) requirements.txt bulunan klasörleri bulup kur
-# requirements.txt dosyası olan klasörleri bul, ama controlnet_aux’u atla
-RUN find /comfyui/custom_nodes -name requirements.txt \
-    | grep -v "comfyui_controlnet_aux" \
-    | xargs -I{} pip install --no-cache-dir -r {}
-
-# DepthAnything’in ihtiyaç duyduğu hafif paketler:
-RUN pip install --no-cache-dir opencv-python scikit-image pillow timm einops huggingface_hub
-
-###############################################################################
-# ⬆︎  EK BLOK BİTTİ  ⬆︎
-###############################################################################
-
-
-# ---------------- PuLID için Gerekli Bağımlılıkları Kur ------------------
-
-# facexlib için gerekli olabilecek sistem kütüphanesi
-RUN apt-get update && apt-get install -y --no-install-recommends libstdc++6 && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# 1. facexlib'i kur
-RUN pip install --no-cache-dir --use-pep517 facexlib
-
-# 2. insightface'in belirli sürümünü (0.7.3) ve onnxruntime-gpu'yu PyPI'dan kur
-#    Not: CUDA ortamında olduğumuz için onnxruntime-gpu kullanıyoruz.
-RUN pip install --no-cache-dir insightface==0.7.3 onnxruntime-gpu
-
-# --------------------------------------------------------------------------
-
 # Install runpod
 RUN pip install runpod requests
 
@@ -106,9 +47,6 @@ RUN chmod +x /start.sh /restore_snapshot.sh
 
 # Optionally copy the snapshot file
 ADD *snapshot*.json /
-
-# Restore the snapshot to install custom nodes
-RUN /restore_snapshot.sh
 
 # Start container
 CMD ["/start.sh"]

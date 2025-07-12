@@ -1,18 +1,13 @@
 runpod_worker_comfy:
   base_path: /runpod-volume          #  ↖  volume’ı bu dizine mount ediyorsanız
   checkpoints: ComfyUI/models/checkpoints/
+  diffusion_models: ComfyUI/models/diffusion_models/
   clip:        ComfyUI/models/clip/
   clip_vision: ComfyUI/models/clip_vision/
   configs:     ComfyUI/models/configs/
-  controlnet:  ComfyUI/models/controlnet/
   embeddings:  ComfyUI/models/embeddings/
   loras:       ComfyUI/models/loras/
   upscale_models: ComfyUI/models/upscale_models/
   vae:         ComfyUI/models/vae/
   unet:        ComfyUI/models/unet/
-  pulid: ComfyUI/models/pulid/
-  insightface: ComfyUI/models/insightface/
-  depthanything: ComfyUI/models/depthanything/
   text_encoders: ComfyUI/models/text_encoders/
-  birefnet:      ComfyUI/models/BiRefNet/pth/
-  style_models: ComfyUI/models/style_models/
