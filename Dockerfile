@@ -32,6 +32,13 @@ RUN /usr/bin/yes | comfy --workspace /comfyui install --cuda-version 11.8 --nvid
 # Change working directory to ComfyUI
 WORKDIR /comfyui
 
+RUN mkdir -p /comfyui/custom_nodes && \
+    git clone --depth 1 https://github.com/ssitu/ComfyUI_UltimateSDUpscale.git \
+      /comfyui/custom_nodes/ComfyUI_UltimateSDUpscale
+      
+RUN if [ -f /comfyui/custom_nodes/ComfyUI_UltimateSDUpscale/requirements.txt ]; then \
+      pip install --no-cache-dir -r /comfyui/custom_nodes/ComfyUI_UltimateSDUpscale/requirements.txt; \
+    fi
 # Install runpod
 RUN pip install runpod requests
 
